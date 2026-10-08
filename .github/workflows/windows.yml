@@ -1,0 +1,46 @@
+name: Windows build and tests
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-latest
+    env:
+      QT_QPA_PLATFORM: offscreen
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install development dependencies
+        run: python -m pip install -e ".[test,ai]"
+      - name: Get verified offline model
+        run: python packaging/fetch_model.py
+      - name: Tests
+        run: python -m pytest -q
+      - name: Install NSIS build tool
+        run: choco install nsis --version=3.11 -y --no-progress
+      - name: Assemble installer and portable package
+        run: python packaging/build_windows.py --makensis "C:\Program Files (x86)\NSIS\makensis.exe"
+      - name: Verify actual packaged runtime
+        run: '& "build\windows\GradeA PaintPlus\runtime\python.exe" "build\windows\GradeA PaintPlus\smoke_windows.py"'
+      - name: Verify silent install and installed runtime
+        shell: pwsh
+        run: |
+          $installer = Resolve-Path "artifacts\GradeA-PaintPlus-0.1.0-Windows-x64-Setup.exe"
+          $process = Start-Process -FilePath $installer -ArgumentList '/S' -Wait -PassThru
+          if ($process.ExitCode -ne 0) { throw "Installer failed" }
+          $installed = Join-Path $env:LOCALAPPDATA 'Programs\GradeA PaintPlus'
+          & "$installed\runtime\python.exe" "$installed\smoke_windows.py"
+          if ($LASTEXITCODE -ne 0) { throw "Installed runtime check failed" }
+          $process = Start-Process -FilePath "$installed\Uninstall.exe" -ArgumentList '/S' -Wait -PassThru
+          if ($process.ExitCode -ne 0) { throw "Uninstall failed" }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: GradeA-PaintPlus-Windows-x64
+          path: artifacts/*
+          if-no-files-found: error

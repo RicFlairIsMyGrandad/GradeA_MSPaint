@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gradea-paintplus"
+version = "0.1.0"
+description = "Offline Paint-style scene and image editor"
+requires-python = ">=3.11"
+dependencies = ["PySide6-Essentials==6.8.3", "Pillow==11.1.0", "numpy==2.2.4"]
+
+[project.optional-dependencies]
+test = ["pytest==8.3.5"]
+ai = ["onnxruntime==1.21.0"]
+
+[project.scripts]
+paintplus = "paintplus.app:main"
+
+[tool.setuptools.packages.find]
+include = ["paintplus*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

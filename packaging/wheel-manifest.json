@@ -1,0 +1,14 @@
+{
+  "PySide6_Essentials-6.8.3-cp39-abi3-win_amd64.whl": "3c0fae5550aff69f2166f46476c36e0ef56ce73d84829eac4559770b0c034b07",
+  "coloredlogs-15.0.1-py2.py3-none-any.whl": "612ee75c546f53e92e70049c9dbfcc18c935a2b9a53b66085ce9ef6a6e5c0934",
+  "flatbuffers-25.12.19-py2.py3-none-any.whl": "7634f50c427838bb021c2d66a3d1168e9d199b0607e6329399f04846d42e20b4",
+  "humanfriendly-10.0-py2.py3-none-any.whl": "1697e1a8a8f550fd43c2865cd84542fc175a61dcb779b6fee18cf6b6ccba1477",
+  "mpmath-1.3.0-py3-none-any.whl": "a0b2b9fe80bbcd81a6647ff13108738cfb482d481d826cc0e02f5b35e5c88d2c",
+  "numpy-2.2.4-cp312-cp312-win_amd64.whl": "2aad3c17ed2ff455b8eaafe06bcdae0062a1db77cb99f4b9cbb5f4ecb13c5146",
+  "onnxruntime-1.21.0-cp312-cp312-win_amd64.whl": "7f801318476cd7003d636a5b392f7a37c08b6c8d2f829773f3c3887029e03f32",
+  "packaging-26.3-py3-none-any.whl": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c",
+  "pillow-11.1.0-cp312-cp312-win_amd64.whl": "a697cd8ba0383bba3d2d3ada02b34ed268cb548b369943cd349007730c92bddf",
+  "protobuf-7.36.2-cp310-abi3-win_amd64.whl": "a300819d441e078a5608c0d3c709796bb548136058fda017ae51d425b44fd353",
+  "shiboken6-6.8.3-cp39-abi3-win_amd64.whl": "bca3a94513ce9242f7d4bbdca902072a1631888e0aa3a8711a52cc5dbe93588f",
+  "sympy-1.14.0-py3-none-any.whl": "e091cc3e99d2141a0ba2847328f5479b05d94a6635cb96148ccb3f34671bd8f5"
+}
