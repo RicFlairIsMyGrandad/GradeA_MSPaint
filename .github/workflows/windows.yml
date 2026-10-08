@@ -8,6 +8,8 @@ permissions:
   contents: read
 jobs:
   windows:
+    permissions:
+      contents: write
     runs-on: windows-latest
     env:
       QT_QPA_PLATFORM: offscreen
@@ -21,7 +23,20 @@ jobs:
       - name: Get verified offline model
         run: python packaging/fetch_model.py
       - name: Tests
-        run: python -m pytest -q
+        run: python packaging/run_tests_ci.py
+      - name: Save failure diagnostics
+        if: failure() && github.event_name != 'pull_request'
+        shell: pwsh
+        run: |
+          if (Test-Path windows-tests.txt) {
+            git checkout --orphan "paintplus-ci-report-${{ github.run_id }}"
+            git rm -rf .
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add windows-tests.txt
+            git commit -m "Windows test diagnostics for run ${{ github.run_id }}"
+            git push origin "HEAD:refs/heads/paintplus-ci-report-${{ github.run_id }}"
+          }
       - name: Install NSIS build tool
         run: choco install nsis --version=3.11 -y --no-progress
       - name: Include source archive
