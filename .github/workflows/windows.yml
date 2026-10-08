@@ -24,6 +24,10 @@ jobs:
         run: python -m pytest -q
       - name: Install NSIS build tool
         run: choco install nsis --version=3.11 -y --no-progress
+      - name: Include source archive
+        run: |
+          New-Item -ItemType Directory -Force artifacts | Out-Null
+          git archive --format=zip --output=artifacts/GradeA-PaintPlus-0.1.0-Source.zip HEAD
       - name: Assemble installer and portable package
         run: python packaging/build_windows.py --makensis "C:\Program Files (x86)\NSIS\makensis.exe"
       - name: Verify actual packaged runtime
@@ -44,3 +48,36 @@ jobs:
           name: GradeA-PaintPlus-Windows-x64
           path: artifacts/*
           if-no-files-found: error
+
+  publish:
+    needs: windows
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: GradeA-PaintPlus-Windows-x64
+          path: artifacts
+      - name: Publish preview downloads
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          BUILD_COMMIT: ${{ github.sha }}
+        run: |
+          cat > release-notes.md <<'NOTES'
+          First usable GradeA PaintPlus preview for Windows 10/11 x64.
+
+          Download the Setup.exe below, scan it if desired, and double-click to install. Python and the offline AI model are included. No separate dependencies or account are required.
+
+          This build passed automated editor tests, packaged Windows runtime checks, and silent install/installed-runtime checks on a Windows runner. Manual usability and clean-PC validation remain outstanding. The installer is unsigned; Windows may show an unknown-publisher warning. Do not disable security software.
+
+          Source, portable ZIP and SHA-256 checksums are included below. Read the repository's docs/USER_GUIDE.md and docs/STATUS.md for features and limitations.
+          NOTES
+          if gh release view v0.1.0-preview >/dev/null 2>&1; then
+            gh release upload v0.1.0-preview artifacts/* --clobber
+            gh release edit v0.1.0-preview --notes-file release-notes.md
+          else
+            gh release create v0.1.0-preview artifacts/* --target "$BUILD_COMMIT" --prerelease --title "GradeA PaintPlus 0.1.0 Preview" --notes-file release-notes.md
+          fi
