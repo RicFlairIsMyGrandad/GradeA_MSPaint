@@ -8,3 +8,5 @@ dist/
 artifacts/
 *.spec
 models/*.onnx
+
+windows-tests.txt

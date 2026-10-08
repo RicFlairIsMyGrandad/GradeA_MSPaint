@@ -2,7 +2,9 @@ import os
 import sys
 from pathlib import Path
 
-os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
+os.environ.setdefault(
+    "QT_QPA_PLATFORM", "windows" if sys.platform == "win32" else "offscreen"
+)
 os.environ.setdefault("XDG_CONFIG_HOME", "/tmp/paintplus-test-config")
 os.environ.setdefault("XDG_CACHE_HOME", "/tmp/paintplus-test-cache")
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))

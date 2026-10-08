@@ -1,8 +1,11 @@
 """Run with the bundled runtime on Windows; verifies actual packaged imports and UI."""
 
 import os
+import sys
 
-os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
+os.environ.setdefault(
+    "QT_QPA_PLATFORM", "windows" if sys.platform == "win32" else "offscreen"
+)
 import tempfile
 from pathlib import Path
 from PIL import Image

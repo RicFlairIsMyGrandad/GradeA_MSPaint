@@ -43,7 +43,7 @@ Do not save your personal projects inside the application installation directory
 
 `.github/workflows/windows.yml` performs tests and the packaged-runtime smoke
 check on a Windows runner before uploading artifacts. It is checked in but has
-not run until the project is pushed and CI completes. No automatic publication.
+not run until the project is pushed and CI completes. Successful main-branch builds publish the preview installer, portable ZIP, source archive and checksums to the v0.1.0-preview GitHub release. Pull requests never publish. Windows GUI tests use the native Windows Qt backend to exercise system fonts and the real clipboard.
 For a public release, also test installation/uninstallation on a clean Windows
 10/11 x64 machine and sign the executable with an appropriate publisher
 certificate. Signing credentials are never stored in this repository.
