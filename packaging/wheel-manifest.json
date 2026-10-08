@@ -10,5 +10,6 @@
   "pillow-11.1.0-cp312-cp312-win_amd64.whl": "a697cd8ba0383bba3d2d3ada02b34ed268cb548b369943cd349007730c92bddf",
   "protobuf-7.36.2-cp310-abi3-win_amd64.whl": "a300819d441e078a5608c0d3c709796bb548136058fda017ae51d425b44fd353",
   "shiboken6-6.8.3-cp39-abi3-win_amd64.whl": "bca3a94513ce9242f7d4bbdca902072a1631888e0aa3a8711a52cc5dbe93588f",
-  "sympy-1.14.0-py3-none-any.whl": "e091cc3e99d2141a0ba2847328f5479b05d94a6635cb96148ccb3f34671bd8f5"
+  "sympy-1.14.0-py3-none-any.whl": "e091cc3e99d2141a0ba2847328f5479b05d94a6635cb96148ccb3f34671bd8f5",
+  "pyreadline3-3.5.4-py3-none-any.whl": "eaf8e6cc3c49bcccf145fc6067ba8643d1df34d604a1ec0eccbf7a18e6d3fae6"
 }

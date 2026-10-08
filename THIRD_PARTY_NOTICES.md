@@ -18,6 +18,7 @@ in the application's `paintplus` directory. No binaries are intentionally hidden
 | U²-Net small model | Apache-2.0 upstream project; license in models/U2NET-LICENSE.txt | https://github.com/xuebinqin/U-2-Net |
 | coloredlogs / humanfriendly | MIT | https://github.com/xolox/python-coloredlogs and https://github.com/xolox/python-humanfriendly |
 | FlatBuffers | Apache-2.0 | https://github.com/google/flatbuffers |
+| pyreadline3 | BSD | https://github.com/pyreadline3/pyreadline3 |
 | packaging | Apache-2.0 / BSD-2-Clause | https://github.com/pypa/packaging |
 | protobuf | BSD-3-Clause | https://github.com/protocolbuffers/protobuf |
 | SymPy / mpmath | BSD | https://github.com/sympy/sympy and https://github.com/mpmath/mpmath |
