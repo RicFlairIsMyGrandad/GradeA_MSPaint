@@ -23,17 +23,15 @@ supports shared ID transforms, not nested groups. Asset enumeration is synchrono
 and top-level per folder; very large collections can take time to scan. Asset
 drops insert at staggered default positions, not exactly at the pointer.
 
-Linux offscreen GUI and document/CPU inference tests verify the development build.
-The Windows packages can be assembled on Linux, but native Windows clipboard,
-file associations, install/uninstall, display scaling and launch must be checked
-on Windows. The CI configuration includes those packaged runtime checks but
-must actually run before reporting them passed. No signing or malware scanner
-verdict is supplied. Do not describe the preview as a verified production release.
+Validation: 46 automated editor tests passed on Linux and native Windows. The
+Windows CI run also verified the assembled runtime, clipboard, saving/export,
+project loading and local CPU AI, then performed a silent installation, checked
+the installed runtime, and ran the uninstaller. The published installer and
+portable ZIP are available in the GitHub preview release with their SHA-256 hashes.
 
-Validation in the development environment: 46 automated tests passed, including
-actual Qt mouse/keyboard gestures, clipboard roundtrip, PNG transparency, every
-export format, project roundtrip, undo/redo, asset multi-insert, transforms, groups,
-Quick Save duplicate handling, panel persistence and real local ONNX CPU inference.
-An original example subject retained opaque face pixels while its white background
-was removed. A Windows x64 installer and portable runtime were assembled using
-verified dependencies. Native Windows validation remains outstanding.
+Build evidence: https://github.com/RicFlairIsMyGrandad/GradeA_MSPaint/actions/runs/37773645577
+Downloads: https://github.com/RicFlairIsMyGrandad/GradeA_MSPaint/releases/tag/v0.1.0-preview
+
+Manual clean-PC Windows 10/11 testing, display scaling, file association behavior,
+and broad usability checks remain outstanding. This is an unsigned preview, with
+no publisher signature or malware-scanner verdict supplied.
