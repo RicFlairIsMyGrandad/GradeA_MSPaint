@@ -24,19 +24,6 @@ jobs:
         run: python packaging/fetch_model.py
       - name: Tests
         run: python packaging/run_tests_ci.py
-      - name: Save failure diagnostics
-        if: failure() && github.event_name != 'pull_request'
-        shell: pwsh
-        run: |
-          if (Test-Path windows-tests.txt) {
-            git checkout --orphan "paintplus-ci-report-${{ github.run_id }}"
-            git rm -rf .
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add windows-tests.txt
-            git commit -m "Windows test diagnostics for run ${{ github.run_id }}"
-            git push origin "HEAD:refs/heads/paintplus-ci-report-${{ github.run_id }}"
-          }
       - name: Install NSIS build tool
         run: choco install nsis --version=3.11 -y --no-progress
       - name: Include source archive
@@ -44,7 +31,7 @@ jobs:
           New-Item -ItemType Directory -Force artifacts | Out-Null
           git archive --format=zip --output=artifacts/GradeA-PaintPlus-0.1.0-Source.zip HEAD
       - name: Assemble installer and portable package
-        run: python packaging/build_windows.py --makensis "C:\Program Files (x86)\NSIS\makensis.exe"
+        run: python packaging/run_command_ci.py windows-build.txt python packaging/build_windows.py --makensis "C:\Program Files (x86)\NSIS\makensis.exe"
       - name: Verify actual packaged runtime
         run: '& "build\windows\GradeA PaintPlus\runtime\python.exe" "build\windows\GradeA PaintPlus\smoke_windows.py"'
       - name: Verify silent install and installed runtime
@@ -58,6 +45,20 @@ jobs:
           if ($LASTEXITCODE -ne 0) { throw "Installed runtime check failed" }
           $process = Start-Process -FilePath "$installed\Uninstall.exe" -ArgumentList '/S' -Wait -PassThru
           if ($process.ExitCode -ne 0) { throw "Uninstall failed" }
+      - name: Save failure diagnostics
+        if: failure() && github.event_name != 'pull_request'
+        shell: pwsh
+        run: |
+          if (Test-Path windows-tests.txt) {
+            git checkout --orphan "paintplus-ci-report-${{ github.run_id }}"
+            git rm -rf .
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add windows-tests.txt
+            if (Test-Path windows-build.txt) { git add windows-build.txt }
+            git commit -m "Windows test diagnostics for run ${{ github.run_id }}"
+            git push origin "HEAD:refs/heads/paintplus-ci-report-${{ github.run_id }}"
+          }
       - uses: actions/upload-artifact@v4
         with:
           name: GradeA-PaintPlus-Windows-x64

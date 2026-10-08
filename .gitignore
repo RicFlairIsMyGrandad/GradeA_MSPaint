@@ -10,3 +10,4 @@ artifacts/
 models/*.onnx
 
 windows-tests.txt
+windows-build.txt
